@@ -18,6 +18,7 @@ int main()
     char b;
     unsigned int rotation = 32;
     unsigned int shift = rotation % 26;
+    unsigned int shiftnum = rotation % 10;
     map<char, int>::iterator pos;
 
     
@@ -41,7 +42,7 @@ int main()
         pos = NUMBERS.find(sample.c_str()[a]);
         if (pos != NUMBERS.end())
         {
-            b = (char)(NUMBERS + (pos->second + shift > 10) ? (pos->second + shift) - 10 : (pos->second + shift));
+            b = (char)(BASE_NUMBER + (pos->second + shiftnum > 10) ? (pos->second + shiftnum) - 10 : (pos->second + shiftnum));
             output += b;
             continue;
         }
