@@ -4,8 +4,9 @@
 #include <iostream>
 #include <map>
 #include <string>
-#define BASE_ALPHABET 65
-#define BASE_NUMBER 48
+#include <cctype>
+//#define BASE_ALPHABET 65
+//#define BASE_NUMBER 48
 using namespace std;
 
 
@@ -20,6 +21,8 @@ int main()
     unsigned int shift = rotation % 26;
     unsigned int shiftnum = rotation % 10;
     map<char, int>::iterator pos;
+    const int BASE_ALPHABET = 65;
+    const int BASE_NUMBER = 48;
 
     
     //Setup the Alphabet
@@ -34,19 +37,35 @@ int main()
         pos = ALPHABET.find(sample.c_str()[a]);
         if (pos != ALPHABET.end())
         {
-            b = (char)(BASE_ALPHABET + (pos->second + shift > 25) ? (pos->second + shift) - 25 : (pos->second + shift));
+            b = (char)(BASE_ALPHABET + ((pos->second + shift > 25) ? (pos->second + shift) - 25 : (pos->second + shift)));
             output += b;
+            continue;
+        }
+
+        pos = ALPHABET.find((char)toupper(sample.c_str()[a]));
+        if (pos != ALPHABET.end())
+        {
+            b = (char)(BASE_ALPHABET + ((pos->second + shift > 25) ? (pos->second + shift) - 25 : (pos->second + shift)));
+            output += (char)tolower(b);
             continue;
         }
 
         pos = NUMBERS.find(sample.c_str()[a]);
         if (pos != NUMBERS.end())
         {
-            b = (char)(BASE_NUMBER + (pos->second + shiftnum > 10) ? (pos->second + shiftnum) - 10 : (pos->second + shiftnum));
+            b = (char)(BASE_NUMBER + ((pos->second + shiftnum > 10) ? (pos->second + shiftnum) - 10 : (pos->second + shiftnum)));
             output += b;
             continue;
         }
 
+        pos = ALPHABET.find(sample.c_str()[a]);
+        if (pos != ALPHABET.end())
+        {
+            b = (char)(BASE_ALPHABET + ((pos->second + shift > 25) ? (pos->second + shift) - 25 : (pos->second + shift)));
+            output += b;
+            continue;
+        }
+        b = sample.c_str()[a];
         output += b;
     }
     std::cout << output << endl;
